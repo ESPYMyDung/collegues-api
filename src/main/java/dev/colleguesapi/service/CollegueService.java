@@ -6,9 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import dev.colleguesapi.entite.Collegue;
+import dev.colleguesapi.exception.CollegueNonTrouveException;
 
 public class CollegueService
 {
@@ -25,8 +24,8 @@ public class CollegueService
 	}
 	
 	//methode
-	@ResponseBody
-	public List<Collegue> rechercherParNom(String nomRecherche)
+	//@ResponseBody
+	public List<Collegue> rechercherParNom(String nomRecherche) throws CollegueNonTrouveException
 	{
 		List<Collegue> listeColl = new ArrayList<>();
 		
@@ -37,6 +36,24 @@ public class CollegueService
         		listeColl.add(pers);
         	}
         }
-        return listeColl;
+        if (listeColl.isEmpty())
+        {throw new CollegueNonTrouveException("Il n'y a personne à ce numéro");}
+        else
+        {return listeColl;}
     }
+	
+	public Collegue rechercherParMatricule(String matriculeRecherche) throws CollegueNonTrouveException
+	{
+	
+        for (Collegue pers:data.values())
+        {
+        	if (pers.getMatricule().equals(matriculeRecherche))
+        	{
+        		return pers;
+        	}
+        }
+        throw new CollegueNonTrouveException("Il n'y a personne à ce numéro");
+        //return null;
+    }
+	
 }
