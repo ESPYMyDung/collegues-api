@@ -3,6 +3,7 @@ package dev.colleguesapi.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +20,8 @@ import dev.colleguesapi.service.CollegueService;
 @RequestMapping("/collegues")
 public class CollegueController
 {
-	private CollegueService servColl = new CollegueService();
+	@Autowired
+	private CollegueService servColl; // = new CollegueService();
 
 	@GetMapping
 	public List<String> trouverCollegue(String nom) throws CollegueNonTrouveException
@@ -49,7 +51,16 @@ public class CollegueController
 		servColl.ajouterUnCollegue(pers);
     }
 	
-	
+
+	@RequestMapping(path = "/{matricule}", method = RequestMethod.PATCH)
+	public void modiferCollegue (@PathVariable String matricule, 
+			String email,
+			String photoUrl   //@RequestBody Collegue pers
+			)  throws CollegueInvalideException, CollegueNonTrouveException
+	{		
+		servColl.modifierEmail(matricule, email);
+		servColl.modifierPhotoUrl(matricule, photoUrl);
+    }
 	
 }
 

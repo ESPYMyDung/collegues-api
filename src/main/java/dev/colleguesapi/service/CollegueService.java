@@ -6,12 +6,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.UUID;
+
+import org.springframework.stereotype.Service;
 
 import dev.colleguesapi.entite.Collegue;
 import dev.colleguesapi.exception.CollegueInvalideException;
 import dev.colleguesapi.exception.CollegueNonTrouveException;
 
+@Service
 public class CollegueService
 {
 	//attribut
@@ -27,6 +31,10 @@ public class CollegueService
 	}
 	
 	//methode
+	public Map<String, Collegue> getMap()
+	{return data;}
+	
+	// - rechercher - 
 	public List<Collegue> rechercherParNom(String nomRecherche) throws CollegueNonTrouveException
 	{
 		List<Collegue> listeColl = new ArrayList<>();
@@ -57,15 +65,16 @@ public class CollegueService
         throw new CollegueNonTrouveException("Il n'y a personne à ce numéro");
     }
 	
+	// - ajouter - 
 	public void ajouterUnCollegue(Collegue collegueAAjouter) throws CollegueInvalideException
 	{
 		
-		if (CollegueService.verifTailleString(collegueAAjouter.getNom(),2) &&
-				CollegueService.verifTailleString(collegueAAjouter.getPrenoms(),2) &&
-				CollegueService.verifTailleString(collegueAAjouter.getEmail(),3) &&
-				CollegueService.verifCharac(collegueAAjouter.getEmail(),"@") &&
-				CollegueService.verifCharac(collegueAAjouter.getPhotoUrl().substring(0, 4),"http") &&
-				CollegueService.verifAge(collegueAAjouter.getDateDeNaissance())
+		if (verifTailleString(collegueAAjouter.getNom(),2) &&
+				verifTailleString(collegueAAjouter.getPrenoms(),2) &&
+				verifTailleString(collegueAAjouter.getEmail(),3) &&
+				verifCharac(collegueAAjouter.getEmail(),"@") &&
+				verifCharac(collegueAAjouter.getPhotoUrl().substring(0, 4),"http") &&
+				verifAge(collegueAAjouter.getDateDeNaissance())
 				)
 		{
 
@@ -78,26 +87,59 @@ public class CollegueService
 
     }
 	
-	public Map<String, Collegue> getMap()
-	{return data;}
-	
-	
-	//verification
-	public static boolean verifTailleString(String aTester, int i) throws CollegueInvalideException
+	// - verification - 
+	public boolean verifTailleString(String aTester, int i) throws CollegueInvalideException
 	{
 		return aTester.length()>=i;
 	}
 
-	public static boolean verifCharac(String aTester, String characDemander) throws CollegueInvalideException
+	public boolean verifCharac(String aTester, String characDemander) throws CollegueInvalideException
 	{	
 		return aTester.contains(characDemander);
 	}
 
-	public static boolean verifAge(LocalDate datNaiss) throws CollegueInvalideException
+	public boolean verifAge(LocalDate datNaiss) throws CollegueInvalideException
 	{
 		Period p = Period.between(datNaiss,LocalDate.now());
 		return p.getYears()>=18;
 	}
 
+	// - modifier - 
+	public Collegue modifierEmail(String matricule, String email) throws CollegueNonTrouveException, CollegueInvalideException
+	{
+		Collegue pers = this.rechercherParMatricule(matricule);
+		verifCharac(email, "@");
+		verifTailleString(email, 3);
+
+		String clef = (String) getKey(data, pers);
+		pers.setEmail(email);		
+		data.put(clef, pers);
+		
+		return pers; // vraiment necessaire?
+	}
+
+	public Collegue modifierPhotoUrl(String matricule, String photoUrl) throws CollegueInvalideException, CollegueNonTrouveException
+	{
+		Collegue pers = this.rechercherParMatricule(matricule);
+		verifCharac(photoUrl.substring(0, 5), "http");
+		
+		String clef = (String) getKey(data, pers);
+		pers.setPhotoUrl(photoUrl);
+		data.put(clef, pers);
+		
+		return pers;  // vraiment necessaire?
+	}
+	
+	public <K, V> K getKey(Map<K, V> map, V value) {
+	    for (Entry<K, V> entry : map.entrySet()) {
+	        if (entry.getValue().equals(value)) {
+	            K key = entry.getKey();
+	            return key;
+	            
+	        }
+	    }
+		return null;
+	    
+	}
 
 }
