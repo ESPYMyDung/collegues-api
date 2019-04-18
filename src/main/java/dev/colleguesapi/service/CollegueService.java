@@ -1,5 +1,7 @@
 package dev.colleguesapi.service;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,6 +9,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import dev.colleguesapi.entite.Collegue;
+import dev.colleguesapi.exception.CollegueInvalideException;
 import dev.colleguesapi.exception.CollegueNonTrouveException;
 
 public class CollegueService
@@ -24,7 +27,6 @@ public class CollegueService
 	}
 	
 	//methode
-	//@ResponseBody
 	public List<Collegue> rechercherParNom(String nomRecherche) throws CollegueNonTrouveException
 	{
 		List<Collegue> listeColl = new ArrayList<>();
@@ -53,7 +55,49 @@ public class CollegueService
         	}
         }
         throw new CollegueNonTrouveException("Il n'y a personne à ce numéro");
-        //return null;
     }
 	
+	public void ajouterUnCollegue(Collegue collegueAAjouter) throws CollegueInvalideException
+	{
+		
+		if (CollegueService.verifTailleString(collegueAAjouter.getNom(),2) &&
+				CollegueService.verifTailleString(collegueAAjouter.getPrenoms(),2) &&
+				CollegueService.verifTailleString(collegueAAjouter.getEmail(),3) &&
+				CollegueService.verifCharac(collegueAAjouter.getEmail(),"@") &&
+				CollegueService.verifCharac(collegueAAjouter.getPhotoUrl().substring(0, 4),"http") &&
+				CollegueService.verifAge(collegueAAjouter.getDateDeNaissance())
+				)
+		{
+
+			collegueAAjouter.setMatricule(UUID.randomUUID().toString());
+
+			data.put(collegueAAjouter.getMatricule().substring(0,5), collegueAAjouter);
+		}
+		else
+		{throw new CollegueInvalideException("Parametre collegue invalide");}
+
+    }
+	
+	public Map<String, Collegue> getMap()
+	{return data;}
+	
+	
+	//verification
+	public static boolean verifTailleString(String aTester, int i) throws CollegueInvalideException
+	{
+		return aTester.length()>=i;
+	}
+
+	public static boolean verifCharac(String aTester, String characDemander) throws CollegueInvalideException
+	{	
+		return aTester.contains(characDemander);
+	}
+
+	public static boolean verifAge(LocalDate datNaiss) throws CollegueInvalideException
+	{
+		Period p = Period.between(datNaiss,LocalDate.now());
+		return p.getYears()>=18;
+	}
+
+
 }

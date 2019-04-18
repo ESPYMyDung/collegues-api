@@ -1,5 +1,7 @@
 package dev.colleguesapi.entite;
 
+import java.time.LocalDate;
+
 public class Collegue
 {
 	//attribut
@@ -7,20 +9,25 @@ public class Collegue
 	private String nom;
 	private String prenoms;
 	private String email;
-	private String dateDeNaissance;
+	private LocalDate dateDeNaissance;
 	private String photoUrl;
 	
 	//constructeur
 	public Collegue() {}
 	
-	public Collegue(String matricule, String nom, String prenoms, String email, String dateNaiss, String photoUrl)
+	public Collegue(String nom, String prenoms, String email, String dateNaiss, String photoUrl)
 	{
-		this.matricule = matricule;
 		this.nom = nom;
 		this.prenoms = prenoms;
 		this.email = email;
-		this.dateDeNaissance = dateNaiss;
+		this.dateDeNaissance = LocalDate.parse(dateNaiss);
 		this.photoUrl = photoUrl;
+	}
+	
+	public Collegue(String matricule, String nom, String prenoms, String email, String dateNaiss, String photoUrl)
+	{
+		this(nom, prenoms, email, dateNaiss, photoUrl);
+		this.matricule = matricule;
 	}
 	
 	//getter
@@ -40,7 +47,7 @@ public class Collegue
 		return email;
 	}
 	
-	public String getDateDeNaissance() {
+	public LocalDate getDateDeNaissance() {
 		return dateDeNaissance;
 	}
 	
@@ -66,7 +73,7 @@ public class Collegue
 	}
 	
 	public void setDateDeNaissance(String dateDeNaissance) {
-		this.dateDeNaissance = dateDeNaissance;
+		this.dateDeNaissance = LocalDate.parse(dateDeNaissance);
 	}
 	
 	public void setPhotoUrl(String photoUrl) {
