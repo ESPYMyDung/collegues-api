@@ -51,16 +51,14 @@ public class CollegueController
 		servColl.ajouterUnCollegue(pers);
     }
 	
-
+/*
 	@RequestMapping(path = "/{matricule}", method = RequestMethod.PATCH)
-	public void modiferCollegue (@PathVariable String matricule, 
-			String email,
-			String photoUrl   //@RequestBody Collegue pers
-			)  throws CollegueInvalideException, CollegueNonTrouveException
+	public void modiferCollegue (@PathVariable String matricule, @RequestBody CollegueModifie pers)  
+			throws CollegueInvalideException, CollegueNonTrouveException
 	{		
 		servColl.modifierEmail(matricule, email);
 		servColl.modifierPhotoUrl(matricule, photoUrl);
-    }
+    }*/
 	
 }
 

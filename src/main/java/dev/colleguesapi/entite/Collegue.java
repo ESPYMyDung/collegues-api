@@ -2,14 +2,26 @@ package dev.colleguesapi.entite;
 
 import java.time.LocalDate;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Collegue
 {
 	//attribut
+	@Id
+	@Column
 	private String matricule;
+	@Column
 	private String nom;
+	@Column
 	private String prenoms;
+	@Column
 	private String email;
+	@Column
 	private LocalDate dateDeNaissance;
+	@Column
 	private String photoUrl;
 	
 	//constructeur
