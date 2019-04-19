@@ -13,15 +13,43 @@ import dev.colleguesapi.exception.CollegueNonTrouveException;
 public class CollegueServiceTest
 {
 	@Test
+	public void testRechercherParNom() throws CollegueNonTrouveException, CollegueInvalideException
+	{
+		CollegueService test = new CollegueService();
+		
+		Collegue stagiaire = new Collegue("qqch","Prof", "Défence", "incognito@ici.com", "1980-03-15", "http://");
+		test.getData().put("pers0", stagiaire);
+		
+		List<Collegue> tmp = test.rechercherParNom("Prof");
+		
+		
+		Assert.assertEquals(stagiaire, tmp.get(0));
+	}
+	
+	@Test
+	public void testRechercherParMatricule() throws CollegueNonTrouveException, CollegueInvalideException
+	{
+		CollegueService test = new CollegueService();
+		
+		Collegue stagiaire = new Collegue("qqch","Prof", "Défence", "incognito@ici.com", "1980-03-15", "http://");
+		test.getData().put("pers0", stagiaire);
+		
+		Collegue tmp = test.rechercherParMatricule("qqch");
+		
+		
+		Assert.assertEquals(stagiaire, tmp);
+	}
+	
+	@Test
 	public void testAjouterCollegue() throws CollegueInvalideException
 	{
 		CollegueService test = new CollegueService();
-		int t = test.getMap().size();
+		int t = test.getData().size();
 		
 		Collegue indv = new Collegue("Sicarii", "Lycoris", "manheym@myfantasy.com", "2000-12-21", "http://myphoto.jpg");
 		test.ajouterUnCollegue(indv);
 		
-		Assert.assertEquals(t+1, test.getMap().size());
+		Assert.assertEquals(t+1, test.getData().size());
 		
 	}
 	
@@ -57,8 +85,7 @@ public class CollegueServiceTest
 		Assert.assertTrue(test.verifAge(testDate));
 		
 	}
-	
-	
+		
 	@Test
 	public void testModifierEmail() throws CollegueInvalideException, CollegueNonTrouveException 
 	{
@@ -68,7 +95,7 @@ public class CollegueServiceTest
 		
 		test.modifierEmail(tmp.get(0).getMatricule(), "dongonbat@awesome.com");
 
-		Assert.assertTrue( test.getMap().containsValue(tmp.get(0)) );
+		Assert.assertTrue( test.getData().containsValue(tmp.get(0)) );
 		
 	}
 	
@@ -81,7 +108,7 @@ public class CollegueServiceTest
 		
 		test.modifierPhotoUrl(tmp.get(0).getMatricule(), "http://memories.png");
 
-		Assert.assertTrue( test.getMap().containsValue(tmp.get(0)) );
+		Assert.assertTrue( test.getData().containsValue(tmp.get(0)) );
 		
 	}
 	

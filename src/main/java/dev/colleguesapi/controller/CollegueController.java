@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.colleguesapi.entite.Collegue;
+import dev.colleguesapi.entite.CollegueModifie;
 import dev.colleguesapi.exception.CollegueInvalideException;
 import dev.colleguesapi.exception.CollegueNonTrouveException;
 import dev.colleguesapi.service.CollegueService;
@@ -21,7 +22,7 @@ import dev.colleguesapi.service.CollegueService;
 public class CollegueController
 {
 	@Autowired
-	private CollegueService servColl; // = new CollegueService();
+	private CollegueService servColl;
 
 	@GetMapping
 	public List<String> trouverCollegue(String nom) throws CollegueNonTrouveException
@@ -40,9 +41,7 @@ public class CollegueController
 	@RequestMapping(path = "/{matricule}", method = RequestMethod.GET)
 	public Collegue trouverCollegueMatricule (@PathVariable String matricule) throws CollegueNonTrouveException
 	{
-			Collegue tmp = servColl.rechercherParMatricule(matricule);
-
-			return tmp;
+			return servColl.rechercherParMatricule(matricule);
     }
 	
 	@RequestMapping(method = RequestMethod.POST)
@@ -53,13 +52,10 @@ public class CollegueController
 	
 
 	@RequestMapping(path = "/{matricule}", method = RequestMethod.PATCH)
-	public void modiferCollegue (@PathVariable String matricule, 
-			String email,
-			String photoUrl   //@RequestBody Collegue pers
-			)  throws CollegueInvalideException, CollegueNonTrouveException
+	public void modiferCollegue (@PathVariable String matricule, @RequestBody CollegueModifie pers) throws CollegueInvalideException, CollegueNonTrouveException
 	{		
-		servColl.modifierEmail(matricule, email);
-		servColl.modifierPhotoUrl(matricule, photoUrl);
+		servColl.modifierEmail(matricule, pers.getEmail());
+		servColl.modifierPhotoUrl(matricule, pers.getPhotoUrl());
     }
 	
 }

@@ -56,7 +56,7 @@ public class Collegue
 		if (dateDeNaissance == null) {
 			if (other.dateDeNaissance != null)
 				return false;
-		} else if (!dateDeNaissance.equals(other.dateDeNaissance))
+		}else if (!dateDeNaissance.equals(other.dateDeNaissance))
 			return false;
 		if (email == null) {
 			if (other.email != null)
