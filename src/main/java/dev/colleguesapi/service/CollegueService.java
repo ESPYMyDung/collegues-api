@@ -28,6 +28,19 @@ public class CollegueService
 		getData().put("pers2", new Collegue(UUID.randomUUID().toString(),"MacGonagal", "Minerva", "mmacgonagal@hogwart.uk", "1927-07-24", "a completer") );
 		getData().put("pers3", new Collegue(UUID.randomUUID().toString(),"Flitwick", "Filius", "fflitwick@hogwart.uk", "1913-10-29", "a completer") );
 		getData().put("pers4", new Collegue(UUID.randomUUID().toString(),"Sprout", "Pomona", "psprout@hogwart.uk", "1954-08-03", "a completer") );
+		
+		getData().put("pers5", new Collegue("azigueguagua", "Lovegood", "Luna", "llovegood@rookery.com","1981-02-15", 
+		        "https://www.thesprucepets.com/thmb/0Y_9qW07-uYqkW9_kcasnwXqCi0=/450x0/filters:no_upscale():max_bytes(150000):strip_icc()/twenty20_d4afe7d2-ebe8-4288-a2ef-bcecbb99df88-5a8c4309c064710037e9965e.jpg")
+			     );
+		getData().put("pers6", new Collegue("azi", "Lovegood", "Xenophilius", "xlovegood@rookery.com","1951-09-20", 
+		        "https://www.thesprucepets.com/thmb/0Y_9qW07-uYqkW9_kcasnwXqCi0=/450x0/filters:no_upscale():max_bytes(150000):strip_icc()/twenty20_d4afe7d2-ebe8-4288-a2ef-bcecbb99df88-5a8c4309c064710037e9965e.jpg")
+			     );
+		getData().put("pers7", new Collegue("guegua", "Lovegood", "Pandora", "plovegood@rookery.com","1952-01-31",  
+		        "https://www.thesprucepets.com/thmb/0Y_9qW07-uYqkW9_kcasnwXqCi0=/450x0/filters:no_upscale():max_bytes(150000):strip_icc()/twenty20_d4afe7d2-ebe8-4288-a2ef-bcecbb99df88-5a8c4309c064710037e9965e.jpg")
+			     );
+		getData().put("pers8", new Collegue("guagua", "Weasley", "Ginevra", "gweasley@burrow.com","1982-10-06", 
+		        "https://www.thesprucepets.com/thmb/0Y_9qW07-uYqkW9_kcasnwXqCi0=/450x0/filters:no_upscale():max_bytes(150000):strip_icc()/twenty20_d4afe7d2-ebe8-4288-a2ef-bcecbb99df88-5a8c4309c064710037e9965e.jpg")
+				 );
 	}
 	
 	//methode
@@ -110,20 +123,19 @@ public class CollegueService
 	}
 
 	// - modifier - 
-	public Collegue modifierEmail(String matricule, String email) throws CollegueNonTrouveException, CollegueInvalideException
+	public void modifierEmail(String matricule, String email) throws CollegueNonTrouveException, CollegueInvalideException
 	{
-		Collegue pers = this.rechercherParMatricule(matricule);
+		Collegue pers = rechercherParMatricule(matricule);
 		verifCharac(email, "@");
 		verifTailleString(email, 3);
 
 		String clef = (String) getKey(getData(), pers);
 		pers.setEmail(email);		
 		getData().put(clef, pers);
-		
-		return pers; // vraiment necessaire?
+
 	}
 
-	public Collegue modifierPhotoUrl(String matricule, String photoUrl) throws CollegueInvalideException, CollegueNonTrouveException
+	public void modifierPhotoUrl(String matricule, String photoUrl) throws CollegueInvalideException, CollegueNonTrouveException
 	{
 		Collegue pers = this.rechercherParMatricule(matricule);
 		verifCharac(photoUrl.substring(0, 5), "http");
@@ -131,8 +143,7 @@ public class CollegueService
 		String clef = (String) getKey(getData(), pers);
 		pers.setPhotoUrl(photoUrl);
 		getData().put(clef, pers);
-		
-		return pers;  // vraiment necessaire?
+
 	}
 	
 	public <K, V> K getKey(Map<K, V> map, V value) {
