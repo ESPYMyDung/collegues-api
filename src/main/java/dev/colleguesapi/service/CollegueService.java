@@ -12,6 +12,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import dev.colleguesapi.entite.Collegue;
+import dev.colleguesapi.entite.CollegueGallerie;
 import dev.colleguesapi.exception.CollegueInvalideException;
 import dev.colleguesapi.exception.CollegueNonTrouveException;
 
@@ -46,6 +47,17 @@ public class CollegueService
 	//methode
 	public Map<String, Collegue> getData() {
 		return data;
+	}
+	
+	public List<CollegueGallerie> retournerCollGall()
+	{
+		List<CollegueGallerie> listePhoto = new ArrayList<>();
+		for (Collegue pers:getData().values() )
+		{
+			listePhoto.add(new CollegueGallerie(pers.getMatricule(), pers.getPhotoUrl() ) );
+		}
+			
+		return listePhoto;
 	}
 
 	public void setData(Map<String, Collegue> data) {

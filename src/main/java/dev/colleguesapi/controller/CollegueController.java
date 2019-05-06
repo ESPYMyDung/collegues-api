@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.colleguesapi.entite.Collegue;
+import dev.colleguesapi.entite.CollegueGallerie;
 import dev.colleguesapi.entite.CollegueModifie;
 import dev.colleguesapi.exception.CollegueInvalideException;
 import dev.colleguesapi.exception.CollegueNonTrouveException;
@@ -44,6 +46,13 @@ public class CollegueController
 	public Collegue trouverCollegueMatricule (@PathVariable String matricule) throws CollegueNonTrouveException
 	{
 			return servColl.rechercherParMatricule(matricule);
+    }
+	
+	@RequestMapping(path = "/gallerie", method = RequestMethod.GET) //@RequestResponse CollegueGallerie pers
+	@ResponseBody
+	public List<CollegueGallerie> retournerListePhoto ()
+	{
+			return servColl.retournerCollGall();
     }
 	
 	@RequestMapping(method = RequestMethod.POST)
