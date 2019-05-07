@@ -1,6 +1,8 @@
 package dev.colleguesapi.entite;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Collegue
 {
@@ -11,6 +13,7 @@ public class Collegue
 	private String email;
 	private LocalDate dateDeNaissance;
 	private String photoUrl;
+	private List<Note> notes;
 	
 	//constructeur
 	public Collegue() {}
@@ -22,6 +25,7 @@ public class Collegue
 		this.email = email;
 		this.dateDeNaissance = LocalDate.parse(dateNaiss);
 		this.photoUrl = photoUrl;
+		this.setNotes(new ArrayList<>());
 	}
 	
 	public Collegue(String matricule, String nom, String prenoms, String email, String dateNaiss, String photoUrl)
@@ -112,6 +116,10 @@ public class Collegue
 		return photoUrl;
 	}
 	
+	public List<Note> getNotes() {
+		return notes;
+	}
+	
 	//setter
 	public void setMatricule(String matricule) {
 		this.matricule = matricule;
@@ -135,6 +143,10 @@ public class Collegue
 	
 	public void setPhotoUrl(String photoUrl) {
 		this.photoUrl = photoUrl;
+	}
+
+	public void setNotes(List<Note> notes) {
+		this.notes = notes;
 	}
 
 }

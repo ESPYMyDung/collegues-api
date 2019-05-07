@@ -1,5 +1,6 @@
 package dev.colleguesapi.controller;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import dev.colleguesapi.entite.Collegue;
 import dev.colleguesapi.entite.CollegueGallerie;
 import dev.colleguesapi.entite.CollegueModifie;
+import dev.colleguesapi.entite.Note;
 import dev.colleguesapi.exception.CollegueInvalideException;
 import dev.colleguesapi.exception.CollegueNonTrouveException;
 import dev.colleguesapi.service.CollegueService;
@@ -42,6 +44,7 @@ public class CollegueController
 
     }
 	
+	// - requete get - 
 	@RequestMapping(path = "/{matricule}", method = RequestMethod.GET)
 	public Collegue trouverCollegueMatricule (@PathVariable String matricule) throws CollegueNonTrouveException
 	{
@@ -55,18 +58,33 @@ public class CollegueController
 			return servColl.retournerCollGall();
     }
 	
+	// - requete post - 
 	@RequestMapping(method = RequestMethod.POST)
 	public void creerCollegue(@RequestBody Collegue pers)  throws CollegueInvalideException
 	{
 		servColl.ajouterUnCollegue(pers);
     }
 	
+	@RequestMapping(path = "/gallerie/{matricule}", method = RequestMethod.POST)
+	public void creerNote(@PathVariable String matricule, @RequestBody Note comment)  throws CollegueNonTrouveException //@RequestBody Note
+	{
+		comment.setTemps( LocalDateTime.now());
+		comment.setId((int)(Math.random() * 1000));
+		servColl.ajouterUneNote(matricule, comment);
+    }
 
+	// - requete patch - 
 	@RequestMapping(path = "/{matricule}", method = RequestMethod.PATCH)
 	public void modiferCollegue (@PathVariable String matricule, @RequestBody CollegueModifie pers) throws CollegueInvalideException, CollegueNonTrouveException
 	{		
 		servColl.modifierEmail(matricule, pers.getEmail());
 		servColl.modifierPhotoUrl(matricule, pers.getPhotoUrl());
+    }
+	
+	@RequestMapping(path = "/gallerie/{matricule}", method = RequestMethod.PATCH)
+	public void enleverNote(@PathVariable String matricule, @RequestBody Note comment)  throws CollegueNonTrouveException
+	{
+		servColl.supprimerUneNote(matricule, comment);
     }
 	
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import dev.colleguesapi.entite.Collegue;
 import dev.colleguesapi.entite.CollegueGallerie;
+import dev.colleguesapi.entite.Note;
 import dev.colleguesapi.exception.CollegueInvalideException;
 import dev.colleguesapi.exception.CollegueNonTrouveException;
 
@@ -168,6 +169,29 @@ public class CollegueService
 	    }
 		return null;
 	    
+	}
+
+	// methode concernant les notes
+	public void ajouterUneNote(String matricule, Note comment) throws CollegueNonTrouveException
+	{
+		Collegue pers = this.rechercherParMatricule(matricule);
+		List<Note> tmp = pers.getNotes();
+		tmp.add(comment);
+		
+		String clef = (String) getKey(getData(), pers);
+		pers.setNotes(tmp);
+		getData().put(clef, pers);
+	}
+	
+	public void supprimerUneNote(String matricule, Note comment) throws CollegueNonTrouveException
+	{
+		Collegue pers = this.rechercherParMatricule(matricule);
+		List<Note> tmp = pers.getNotes();
+		tmp.remove(comment);
+		
+		String clef = (String) getKey(getData(), pers);
+		pers.setNotes(tmp);
+		getData().put(clef, pers);
 	}
 
 
