@@ -48,6 +48,19 @@
 			<artifactId>h2</artifactId>
 		</dependency>
 
+		<!-- Pour utiliser la securite de spring -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<!-- Pour utiliser les tokens -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

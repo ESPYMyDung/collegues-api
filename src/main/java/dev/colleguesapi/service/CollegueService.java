@@ -5,6 +5,7 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import dev.colleguesapi.entite.Collegue;
 import dev.colleguesapi.entite.CollegueRepository;
+import dev.colleguesapi.entite.Note;
 import dev.colleguesapi.exception.CollegueInvalideException;
 import dev.colleguesapi.exception.CollegueNonTrouveException;
 
@@ -19,83 +21,64 @@ import dev.colleguesapi.exception.CollegueNonTrouveException;
 public class CollegueService
 {
 	//attribut
-	//private Map<String, Collegue> data = new HashMap<>();
 	private CollegueRepository accesBDD;
 
 	//constructeur
 	@Autowired
 	public CollegueService(CollegueRepository accesBDD)
 	{
-		/*
-		data.put("pers1", new Collegue(UUID.randomUUID().toString(),"Snape", "Severus", "ssnape@hogwart.uk", "1970-05-13", "a completer") );
-		data.put("pers2", new Collegue(UUID.randomUUID().toString(),"MacGonagal", "Minerva", "mmacgonagal@hogwart.uk", "1927-07-24", "a completer") );
-		data.put("pers3", new Collegue(UUID.randomUUID().toString(),"Flitwick", "Filius", "fflitwick@hogwart.uk", "1913-10-29", "a completer") );
-		data.put("pers4", new Collegue(UUID.randomUUID().toString(),"Sprout", "Pomona", "psprout@hogwart.uk", "1954-08-03", "a completer") );
-		*/
 		this.accesBDD = accesBDD;
 		accesBDD.save(new Collegue(UUID.randomUUID().toString(),"Snape", "Severus", "ssnape@hogwart.uk", "1970-05-13", "a completer"));
 		accesBDD.save(new Collegue(UUID.randomUUID().toString(),"MacGonagal", "Minerva", "mmacgonagal@hogwart.uk", "1927-07-24", "a completer"));
 		accesBDD.save(new Collegue(UUID.randomUUID().toString(),"Flitwick", "Filius", "fflitwick@hogwart.uk", "1913-10-29", "a completer"));
 		accesBDD.save(new Collegue(UUID.randomUUID().toString(),"Sprout", "Pomona", "psprout@hogwart.uk", "1954-08-03", "a completer"));
-		
+
+		accesBDD.save(new Collegue("azigueguagua", "Lovegood", "Luna", "llovegood@rookery.com","1981-02-15", 
+				"https://www.thesprucepets.com/thmb/0Y_9qW07-uYqkW9_kcasnwXqCi0=/450x0/filters:no_upscale():max_bytes(150000):strip_icc()/twenty20_d4afe7d2-ebe8-4288-a2ef-bcecbb99df88-5a8c4309c064710037e9965e.jpg") );
+		accesBDD.save(new Collegue("azi", "Lovegood", "Xenophilius", "xlovegood@rookery.com","1951-09-20", 
+				"https://www.thesprucepets.com/thmb/0Y_9qW07-uYqkW9_kcasnwXqCi0=/450x0/filters:no_upscale():max_bytes(150000):strip_icc()/twenty20_d4afe7d2-ebe8-4288-a2ef-bcecbb99df88-5a8c4309c064710037e9965e.jpg") );
+		accesBDD.save(new Collegue("guegua", "Lovegood", "Pandora", "plovegood@rookery.com","1952-01-31",  
+				"https://www.thesprucepets.com/thmb/0Y_9qW07-uYqkW9_kcasnwXqCi0=/450x0/filters:no_upscale():max_bytes(150000):strip_icc()/twenty20_d4afe7d2-ebe8-4288-a2ef-bcecbb99df88-5a8c4309c064710037e9965e.jpg") );
+		accesBDD.save(new Collegue("guagua", "Weasley", "Ginevra", "gweasley@burrow.com","1982-10-06", 
+				"https://www.thesprucepets.com/thmb/0Y_9qW07-uYqkW9_kcasnwXqCi0=/450x0/filters:no_upscale():max_bytes(150000):strip_icc()/twenty20_d4afe7d2-ebe8-4288-a2ef-bcecbb99df88-5a8c4309c064710037e9965e.jpg") );
 	}
-	
-	
-	//methode
-	//public Map<String, Collegue> getMap()
-	//{return data;}
-	
+
+
 	// - rechercher - 
 	public List<Collegue> rechercherParNom(String nomRecherche) throws CollegueNonTrouveException
 	{
 		List<Collegue> listeColl = new ArrayList<>();
-		
-        /*for (Collegue pers:data.values())
-        {
-        	if (pers.getNom().equals(nomRecherche))
-        	{
-        		listeColl.add(pers);
-        	}
-        }*/
-		
-		for (Collegue pers:accesBDD.findAll())
-        {
-        	if (pers.getNom().equals(nomRecherche))
-        	{
-        		listeColl.add(pers);
-        	}
-        }
 
-        if (listeColl.isEmpty())
-        {throw new CollegueNonTrouveException("Il n'y a personne à ce numéro");}
-        else
-        {return listeColl;}
-    }
-	
+		for (Collegue pers:accesBDD.findAll())
+		{
+			if (pers.getNom().equals(nomRecherche))
+			{
+				listeColl.add(pers);
+			}
+		}
+
+		if (listeColl.isEmpty())
+		{throw new CollegueNonTrouveException("Il n'y a personne à ce numéro");}
+		else
+		{return listeColl;}
+	}
+
 	public Collegue rechercherParMatricule(String matriculeRecherche) throws CollegueNonTrouveException
 	{
-	
-        /*for (Collegue pers:data.values())
-        {
-        	if (pers.getMatricule().equals(matriculeRecherche))
-        	{
-        		return pers;
-        	}
-        }
-        throw new CollegueNonTrouveException("Il n'y a personne à ce numéro");*/
+
 		Optional<Collegue> tmp = accesBDD.findById(matriculeRecherche);
 		if (tmp.isPresent())
-			{return tmp.get();}
+		{return tmp.get();}
 		else
-			{throw new CollegueNonTrouveException("Il n'y a personne à ce numéro");}
-    }
+		{throw new CollegueNonTrouveException("Il n'y a personne à ce numéro");}
+	}
 
-	
-	
+
+
 	// - ajouter - 
 	public void ajouterUnCollegue(Collegue collegueAAjouter) throws CollegueInvalideException
 	{
-		
+
 		if (verifTailleString(collegueAAjouter.getNom(),2) &&
 				verifTailleString(collegueAAjouter.getPrenoms(),2) &&
 				verifTailleString(collegueAAjouter.getEmail(),3) &&
@@ -107,15 +90,14 @@ public class CollegueService
 
 			collegueAAjouter.setMatricule(UUID.randomUUID().toString());
 
-			//data.put(collegueAAjouter.getMatricule().substring(0,5), collegueAAjouter);
 			accesBDD.save(collegueAAjouter);
-			
+
 		}
 		else
 		{throw new CollegueInvalideException("Parametre collegue invalide");}
 
-    }
-	
+	}
+
 	// - verification - 
 	public boolean verifTailleString(String aTester, int i) throws CollegueInvalideException
 	{
@@ -139,14 +121,10 @@ public class CollegueService
 		Collegue pers = rechercherParMatricule(matricule);//this.rechercherParMatricule(matricule);
 		verifCharac(email, "@");
 		verifTailleString(email, 3);
-		
+
 		pers.setEmail(email);
 		accesBDD.save(pers);
 
-		/*String clef = (String) getKey(data, pers);
-		pers.setEmail(email);		
-		data.put(clef, pers);*/
-		
 		return pers; // vraiment necessaire?
 	}
 
@@ -154,26 +132,36 @@ public class CollegueService
 	{
 		Collegue pers = rechercherParMatricule(matricule); //this.rechercherParMatricule(matricule);
 		verifCharac(photoUrl.substring(0, 5), "http");
-		
+
 		pers.setPhotoUrl(photoUrl);
 		accesBDD.save(pers);
-		
-		/*String clef = (String) getKey(data, pers);
-		pers.setPhotoUrl(photoUrl);
-		data.put(clef, pers);*/
-		
+
 		return pers;  // vraiment necessaire?
 	}
-	/*
-	public <K, V> K getKey(Map<K, V> map, V value) {
-	    for (Entry<K, V> entry : map.entrySet()) {
-	        if (entry.getValue().equals(value)) {
-	            K key = entry.getKey();
-	            return key;
-	            
-	        }
-	    }
-		return null;   
-	}*/
+	
+	// methode concernant les notes
+		public void ajouterUneNote(String matricule, Note comment) throws CollegueNonTrouveException
+		{
+			Collegue pers = rechercherParMatricule(matricule);
+			Set<Note> tmp = pers.getNotes();
+			tmp.add(comment);
+			pers.setNotes(tmp);
+
+			accesBDD.save(pers);
+		}
+		
+		
+
+		/*public void supprimerUneNote(String matricule, Note comment) throws CollegueNonTrouveException
+		{
+			Collegue pers = this.rechercherParMatricule(matricule);
+			List<Note> tmp = pers.getNotes();
+			tmp.remove(comment);
+
+			String clef = (String) getKey(getData(), pers);
+			pers.setNotes(tmp);
+			getData().put(clef, pers);
+		}*/
+
 
 }

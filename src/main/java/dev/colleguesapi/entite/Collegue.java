@@ -1,10 +1,13 @@
 package dev.colleguesapi.entite;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Collegue
@@ -24,6 +27,16 @@ public class Collegue
 	@Column
 	private String photoUrl;
 	
+	//@Column
+	@OneToMany(mappedBy="coll")
+	private Set<Note> notes;
+	
+	/*
+	@Column
+	@Enumerated(EnumType.STRING)
+	private List<Role> authorites;*/
+	
+
 	//constructeur
 	public Collegue() {}
 	
@@ -34,6 +47,7 @@ public class Collegue
 		this.email = email;
 		this.dateDeNaissance = LocalDate.parse(dateNaiss);
 		this.photoUrl = photoUrl;
+		this.setNotes(new HashSet<Note>());
 	}
 	
 	public Collegue(String matricule, String nom, String prenoms, String email, String dateNaiss, String photoUrl)
@@ -124,6 +138,10 @@ public class Collegue
 		return photoUrl;
 	}
 	
+	public Set<Note> getNotes() {
+		return notes;
+	}
+	
 	//setter
 	public void setMatricule(String matricule) {
 		this.matricule = matricule;
@@ -147,6 +165,10 @@ public class Collegue
 	
 	public void setPhotoUrl(String photoUrl) {
 		this.photoUrl = photoUrl;
+	}
+	
+	public void setNotes(Set<Note> tmp) {
+		this.notes = tmp;
 	}
 
 }
