@@ -1,11 +1,15 @@
 package dev.colleguesapi.entite;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
@@ -27,20 +31,22 @@ public class Collegue
 	@Column
 	private String photoUrl;
 	
-	//@Column
+	@Column
 	@OneToMany(mappedBy="coll")
 	private Set<Note> notes;
 	
-	/*
 	@Column
-	@Enumerated(EnumType.STRING)
-	private List<Role> authorites;*/
+	private String motDePasse;
+	@Column
+	@ElementCollection(fetch = FetchType.EAGER)
+	private List<Role> authorites;
 	
 
 	//constructeur
 	public Collegue() {}
 	
-	public Collegue(String nom, String prenoms, String email, String dateNaiss, String photoUrl)
+	@SuppressWarnings("serial")
+	public Collegue(String nom, String prenoms, String email, String dateNaiss, String photoUrl, String motPass)
 	{
 		this.nom = nom;
 		this.prenoms = prenoms;
@@ -48,12 +54,27 @@ public class Collegue
 		this.dateDeNaissance = LocalDate.parse(dateNaiss);
 		this.photoUrl = photoUrl;
 		this.setNotes(new HashSet<Note>());
+		this.motDePasse = motPass;
+		this.setRoles(new ArrayList<Role>() {{ add(Role.ROLE_USER); }}); 
 	}
 	
-	public Collegue(String matricule, String nom, String prenoms, String email, String dateNaiss, String photoUrl)
+	/*public Collegue(String nom, String prenoms, String email, String dateNaiss, String photoUrl, String motPass, Role status)
 	{
-		this(nom, prenoms, email, dateNaiss, photoUrl);
+		this(nom, prenoms, email, dateNaiss, photoUrl, motPass);
+		this.authorites.add(status);
+	}*/
+	
+	public Collegue(String matricule, String nom, String prenoms, String email, String dateNaiss, String photoUrl, String motPass)
+	{
+		this(nom, prenoms, email, dateNaiss, photoUrl, motPass);
 		this.matricule = matricule;
+	}
+	
+	public Collegue(String matricule, String nom, String prenoms, String email, String dateNaiss, String photoUrl, String motPass, Role status)
+	{
+		this(nom, prenoms, email, dateNaiss, photoUrl, motPass);
+		this.matricule = matricule;
+		this.authorites.add(status);
 	}
 	
 	//Override
@@ -142,6 +163,14 @@ public class Collegue
 		return notes;
 	}
 	
+	public String getMotDePasse() {
+		return motDePasse;
+	}
+	
+	public List<Role> getRoles() {
+		return authorites;
+	}
+
 	//setter
 	public void setMatricule(String matricule) {
 		this.matricule = matricule;
@@ -169,6 +198,14 @@ public class Collegue
 	
 	public void setNotes(Set<Note> tmp) {
 		this.notes = tmp;
+	}
+	
+	public void setMotDePasse(String motDePasse) {
+		this.motDePasse = motDePasse;
+	}
+	
+	public void setRoles(List<Role> authorites) {
+		this.authorites = authorites;
 	}
 
 }

@@ -10,4 +10,5 @@ public interface CollegueRepository extends JpaRepository<Collegue, String>
 {
 	// findBy + "nom colomne bdd"
 	Optional<Collegue> findBynom(String nom);
+	Optional<Collegue> findBymatricule(String matricule);
 }
