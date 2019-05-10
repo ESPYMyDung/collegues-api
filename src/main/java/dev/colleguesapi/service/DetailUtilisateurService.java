@@ -32,7 +32,7 @@ public class DetailUtilisateurService implements UserDetailsService
 	  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
 	    // Recherche d'utilisateur par nom utilisateur
-	    Collegue collegueTrouve = this.collegueRepository. findBymatricule(username) //findBynom(username)
+	    Collegue collegueTrouve = this.collegueRepository.findBymatricule(username) //findBynom(username)
 	      .orElseThrow(() -> new UsernameNotFoundException("Utilisateur non trouvé"));
 
 

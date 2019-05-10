@@ -2,23 +2,31 @@ package dev.colleguesapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
 
 @SpringBootApplication
 public class ColleguesApiApplication
 {
 	
-	/* daje fait dans le startupinit
-	@Autowired
-    private CollegueRepository collegueRepository;
-
-    @EventListener(ContextRefreshedEvent.class)
-    public void init() {
-
-        // insertion de 2 utilisateurs en base de données
-        //utilisateurRepository.save(new Utilisateur("u1", "pass1", Arrays.asList("ROLE_ADMIN", "ROLE_USER")));
-        //utilisateurRepository.save(new Utilisateur("u2",  "pass2", Arrays.asList("ROLE_USER")));
-
-    }*/
+	@Bean //pour crossorigin + cookies
+	public WebMvcConfigurer corsConfigurer()
+	{
+		return new WebMvcConfigurer()
+		{
+			@Override
+			public void addCorsMappings(CorsRegistry registry)
+			{
+				registry.addMapping("/**")
+				.allowedOrigins("*")
+				.allowedMethods("GET", "POST", "PATCH", "PUT", "OPTIONS")
+				.allowCredentials(true);
+				;
+			}
+		};
+	}
 
     // -- le main est lààà!! --
 	public static void main(String[] args) {
