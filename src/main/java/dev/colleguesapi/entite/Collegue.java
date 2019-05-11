@@ -58,11 +58,11 @@ public class Collegue
 		this.setRoles(new ArrayList<Role>() {{ add(Role.ROLE_USER); }}); 
 	}
 	
-	/*public Collegue(String nom, String prenoms, String email, String dateNaiss, String photoUrl, String motPass, Role status)
+	public Collegue(String nom, String prenoms, String email, String dateNaiss, String photoUrl, String motPass, Role status)
 	{
 		this(nom, prenoms, email, dateNaiss, photoUrl, motPass);
 		this.authorites.add(status);
-	}*/
+	}
 	
 	public Collegue(String matricule, String nom, String prenoms, String email, String dateNaiss, String photoUrl, String motPass)
 	{

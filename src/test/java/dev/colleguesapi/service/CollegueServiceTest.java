@@ -9,6 +9,7 @@ import org.mockito.Mockito;
 
 import dev.colleguesapi.entite.Collegue;
 import dev.colleguesapi.entite.CollegueRepository;
+import dev.colleguesapi.entite.Role;
 import dev.colleguesapi.exception.CollegueInvalideException;
 
 public class CollegueServiceTest
@@ -31,7 +32,7 @@ public class CollegueServiceTest
 		//CollegueService test = new CollegueService();
 		//int t = testRepo.findAll().size();
 		
-		Collegue indv = new Collegue("Sicarii", "Lycoris", "manheym@myfantasy.com", "2000-12-21", "http://myphoto.jpg");
+		Collegue indv = new Collegue("Sicarii", "Lycoris", "manheym@myfantasy.com", "2000-12-21", "http://myphoto.jpg", "Lunala", Role.ROLE_ADMIN);
 		testServ.ajouterUnCollegue(indv);
 		
 		Mockito.verify(testRepo).save(indv);
