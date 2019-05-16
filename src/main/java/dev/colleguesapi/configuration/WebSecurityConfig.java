@@ -47,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 		//requete authorise pour tt les utilisateurs, ici GET
 		.authorizeRequests() 
 		.antMatchers(HttpMethod.GET, "/collegues/**").permitAll() // authorise les GET
-		//.antMatchers(HttpMethod.GET, "/collegues/gallerie").permitAll()
+		.antMatchers(HttpMethod.GET, "/collegues/gallerie").permitAll()
 		.antMatchers("/h2-console/**").permitAll() //acces h2 sans authentification [pas encore en place]
 		.antMatchers("/auth").permitAll()
 
