@@ -31,6 +31,7 @@ public class CollegueService
 		this.accesBDD = accesBDD;
 	}
 
+	// - renvoyer - 
 	public List<CollegueGallerie> retournerCollGall()
 	{
 		List<CollegueGallerie> listePhoto = new ArrayList<>();

@@ -38,8 +38,7 @@ public class DetailUtilisateurService implements UserDetailsService
 
 	    // Création d'un objet User (implémentant UserDetails)
 	    return new User(collegueTrouve.getMatricule(), collegueTrouve.getMotDePasse(),collegueTrouve.getRoles().stream().map(Role::name).map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
-
-	 // pour le SimpleGrantedAuthority, il prend un string or Role est une enum. il faut donc recupere son contnu et l'envoyer à SimpleGrantedAuthority
+	    	// pour le SimpleGrantedAuthority, il prend un string or Role est une enum. il faut donc recupere son contnu et l'envoyer à SimpleGrantedAuthority
 	  }
 
 }

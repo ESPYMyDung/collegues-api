@@ -14,7 +14,7 @@ public class CollegueConnect
 	//constructeur
 	public CollegueConnect() {}
 	
-	public CollegueConnect(String matricule, String nom, String prenoms,List<Role> authorites, String photoUrl)
+	public CollegueConnect(String matricule, String nom, String prenoms, List<Role> authorites, String photoUrl)
 	{
 		this.matricule = matricule;
 		this.nom = nom;

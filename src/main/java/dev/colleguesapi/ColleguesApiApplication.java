@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @SpringBootApplication
 public class ColleguesApiApplication
 {
-	
+
 	@Bean //pour crossorigin + cookies
 	public WebMvcConfigurer corsConfigurer()
 	{
@@ -23,7 +23,6 @@ public class ColleguesApiApplication
 				.allowedOrigins("*")
 				.allowedMethods("GET", "POST", "PATCH", "PUT", "OPTIONS")
 				.allowCredentials(true);
-				;
 			}
 		};
 	}

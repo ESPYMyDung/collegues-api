@@ -20,13 +20,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 {
 	@Bean //encriptage du motpass
-	public PasswordEncoder passwordEncoder() {
+	public PasswordEncoder passwordEncoder()
+	{
 		return new BCryptPasswordEncoder();
 	}
 
 	@Override // pour l'authentification
 	@Bean
-	public AuthenticationManager authenticationManagerBean() throws Exception {
+	public AuthenticationManager authenticationManagerBean() throws Exception
+	{
 		return super.authenticationManagerBean();
 	}
 

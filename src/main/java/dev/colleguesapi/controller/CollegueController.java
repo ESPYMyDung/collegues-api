@@ -8,10 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -42,19 +43,16 @@ public class CollegueController
 		{ out.add(pers.getMatricule()); }
 
 		return out;
-
 	}
 
 	// - requete get - 
-	@RequestMapping(path = "/{matricule}", method = RequestMethod.GET)
+	@GetMapping(path = "/{matricule}")
 	public Collegue trouverCollegueMatricule (@PathVariable String matricule) throws CollegueNonTrouveException
 	{
-		Collegue tmp = servColl.rechercherParMatricule(matricule);
-
-		return tmp;
+		return servColl.rechercherParMatricule(matricule);
 	}
 
-	@RequestMapping(path = "/gallerie", method = RequestMethod.GET)
+	@GetMapping(path = "/gallerie")
 	@ResponseBody
 	public List<CollegueGallerie> retournerListePhoto ()
 	{
@@ -63,22 +61,21 @@ public class CollegueController
 
 	// - requete post - 
 	@Secured("ROLE_ADMIN")
-	@RequestMapping(method = RequestMethod.POST)
+	@PostMapping
 	public void creerCollegue(@RequestBody Collegue pers)  throws CollegueInvalideException
 	{
 		servColl.ajouterUnCollegue(pers);
 	}
 
-	@RequestMapping(path = "/gallerie/{matricule}", method = RequestMethod.POST)
-	public void creerNote(@PathVariable String matricule, @RequestBody Note comment)  throws CollegueNonTrouveException //@RequestBody Note
+	@PostMapping(path = "/gallerie/{matricule}")
+	public void creerNote(@PathVariable String matricule, @RequestBody Note comment)  throws CollegueNonTrouveException
 	{
 		comment.setTemps( LocalDateTime.now());
-		//comment.setId((int)(Math.random() * 1000));
 		servColl.ajouterUneNote(matricule, comment);
 	}
 
 	// - requete patch - 
-	@RequestMapping(path = "/{matricule}", method = RequestMethod.PATCH)
+	@PatchMapping(path = "/{matricule}")
 	public void modiferCollegue (@PathVariable String matricule, @RequestBody CollegueModifie pers)  
 			throws CollegueInvalideException, CollegueNonTrouveException
 	{		

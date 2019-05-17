@@ -13,14 +13,13 @@ import dev.colleguesapi.entite.CollegueRepository;
 import dev.colleguesapi.entite.Role;
 
 @Component
-public class StartupDataInit {
-
+public class StartupDataInit
+{
     @Autowired
     CollegueRepository collegueRepo;
     
     @Autowired
     private PasswordEncoder passwordEncoder;
-
 
     // La méthode init va être invoquée au démarrage de l'application.
     @EventListener(ContextRefreshedEvent.class)

@@ -51,6 +51,7 @@ public class AuthentificationController
 	@Autowired
 	private CollegueService servColl;
 
+	//authentification
 	@PostMapping(value = "/auth")
 	public ResponseEntity authenticate(@RequestBody InfosAuthentification authenticationRequest, HttpServletResponse response)
 	{
@@ -60,7 +61,6 @@ public class AuthentificationController
 		// vérification de l'authentification
 		// une exception de type `BadCredentialsException` en cas d'informations non valides
 		Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
-
 
 		User user = (User) authentication.getPrincipal();
 
@@ -82,25 +82,21 @@ public class AuthentificationController
 		authCookie.setPath("/");
 		response.addCookie(authCookie);
 
-
-
 		return ResponseEntity.ok().build();
 
 	}
 
+	//valeur du collegue connecte
 	@GetMapping(value="/me")
 	@ResponseBody
-	public CollegueConnect renvoyerUtilisateur(@RequestBody InfosAuthentification authenticationRequest, HttpServletResponse response) throws CollegueNonTrouveException
+	public CollegueConnect renvoyerUtilisateur() throws CollegueNonTrouveException
 	{		
-		String mat = SecurityContextHolder.getContext().getAuthentication().getName(); //getPrincipal();//
-		System.out.println(mat);
+		String mat = SecurityContextHolder.getContext().getAuthentication().getName();
 		Collegue tmp = servColl.rechercherParMatricule(mat);
 		CollegueConnect me = new CollegueConnect(tmp.getMatricule(), tmp.getNom(), tmp.getPrenoms(), tmp.getRoles(), tmp.getPhotoUrl());
 		
 		return me;
-
 	}
-
 
 	@ExceptionHandler(BadCredentialsException.class)
 	public ResponseEntity mauvaiseInfosConnexion(BadCredentialsException e) {

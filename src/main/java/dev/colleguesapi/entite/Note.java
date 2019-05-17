@@ -33,7 +33,6 @@ public class Note
 	public Note(String message)
 	{
 		this.message = message;
-		//this.setId((int)(Math.random() * 1000));
 		this.setTemps( LocalDateTime.now());
 	}
 
@@ -54,13 +53,7 @@ public class Note
 		return coll;
 	}
 
-	
-
 	//setter
-	/*public void setId(int id) {
-		this.id = id;
-	}*/
-
 	public void setMessage(String message) {
 		this.message = message;
 	}
