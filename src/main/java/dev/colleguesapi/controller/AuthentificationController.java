@@ -92,7 +92,8 @@ public class AuthentificationController
 	@ResponseBody
 	public CollegueConnect renvoyerUtilisateur(@RequestBody InfosAuthentification authenticationRequest, HttpServletResponse response) throws CollegueNonTrouveException
 	{		
-		String mat = SecurityContextHolder.getContext().getAuthentication().getName();
+		String mat = SecurityContextHolder.getContext().getAuthentication().getName(); //getPrincipal();//
+		System.out.println(mat);
 		Collegue tmp = servColl.rechercherParMatricule(mat);
 		CollegueConnect me = new CollegueConnect(tmp.getMatricule(), tmp.getNom(), tmp.getPrenoms(), tmp.getRoles(), tmp.getPhotoUrl());
 		
