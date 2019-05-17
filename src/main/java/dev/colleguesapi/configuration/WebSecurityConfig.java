@@ -51,8 +51,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 		.antMatchers("/h2-console/**").permitAll() //acces h2 sans authentification [pas encore en place]
 		.antMatchers("/auth").permitAll()
 
-		//.antMatchers("/admin").hasRole("ADMIN") // get en acces seulement pour les admins
-
 		//autre requete (POST et PATCH)
 		.anyRequest().authenticated()	
 		.and().headers().frameOptions().disable() // acces h2 sans authentification

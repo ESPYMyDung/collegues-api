@@ -16,6 +16,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -90,15 +91,8 @@ public class AuthentificationController
 	@GetMapping(value="/me")
 	@ResponseBody
 	public CollegueConnect renvoyerUtilisateur(@RequestBody InfosAuthentification authenticationRequest, HttpServletResponse response) throws CollegueNonTrouveException
-	{
-		/*UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(authenticationRequest.getMatriculeColl(), authenticationRequest.getMotDePasse());
-		Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
-
-		User user = (User) authentication.getPrincipal();
-
-		return (ResponseEntity<?>) ResponseEntity.ok().build().getBody();*/
-		
-		String mat = authenticationRequest.getMatriculeColl(); //SecurityContextHolder.getContext().getAuthentication().getMatriculeColl();
+	{		
+		String mat = SecurityContextHolder.getContext().getAuthentication().getName();
 		Collegue tmp = servColl.rechercherParMatricule(mat);
 		CollegueConnect me = new CollegueConnect(tmp.getMatricule(), tmp.getNom(), tmp.getPrenoms(), tmp.getRoles(), tmp.getPhotoUrl());
 		

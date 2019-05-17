@@ -117,7 +117,7 @@ public class CollegueService
 	// - modifier - 
 	public Collegue modifierEmail(String matricule, String email) throws CollegueNonTrouveException, CollegueInvalideException
 	{
-		Collegue pers = rechercherParMatricule(matricule);//this.rechercherParMatricule(matricule);
+		Collegue pers = rechercherParMatricule(matricule);
 		verifCharac(email, "@");
 		verifTailleString(email, 3);
 
@@ -129,7 +129,7 @@ public class CollegueService
 
 	public Collegue modifierPhotoUrl(String matricule, String photoUrl) throws CollegueInvalideException, CollegueNonTrouveException
 	{
-		Collegue pers = rechercherParMatricule(matricule); //this.rechercherParMatricule(matricule);
+		Collegue pers = rechercherParMatricule(matricule);
 		verifCharac(photoUrl.substring(0, 5), "http");
 
 		pers.setPhotoUrl(photoUrl);
